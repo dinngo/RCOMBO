@@ -1,9 +1,12 @@
 pragma solidity 0.7.6;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "./hegic/GradualTokenSwap/contracts/GradualTokenSwap.sol";
 
 contract IouCOMBO is ERC20, GradualTokenSwap {
+    using SafeERC20 for IERC20;
+    using SafeMath for uint256;
     // prettier-ignore
     IERC20 public constant COMBO = IERC20(0xfFffFffF2ba8F66D4e51811C5190992176930278);
 
@@ -15,34 +18,13 @@ contract IouCOMBO is ERC20, GradualTokenSwap {
         _mint(msg.sender, supply);
     }
 
-    /**
-     * @dev Allow the transferFrom from contract itself.
-     */
-    function transferFrom(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) public override returns (bool) {
-        _transfer(sender, recipient, amount);
-        if (_msgSender() != address(this)) {
-            _approve(
-                sender,
-                _msgSender(),
-                _allowances[sender][_msgSender()].sub(
-                    amount,
-                    "ERC20: transfer amount exceeds allowance"
-                )
-            );
-        }
-        return true;
-    }
 
     /**
      * @dev Provide IOUCOMBO tokens to the contract for later exchange
      * on `user`'s behalf.
      */
     function provideFor(address user, uint256 amount) external {
-        rHEGIC.safeTransferFrom(msg.sender, address(this), amount);
+        _transfer(_msgSender(), address(this), amount);
         provided[user] = provided[user].add(amount);
     }
 
