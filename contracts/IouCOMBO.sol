@@ -11,7 +11,7 @@ contract IouCOMBO is ERC20, GradualTokenSwap {
     IERC20 public constant COMBO = IERC20(0xfFffFffF2ba8F66D4e51811C5190992176930278);
 
     constructor(uint256 _amount, uint256 _start)
-        ERC20("Furucombo IOU", "IOUCOMBO")
+        ERC20("Furucombo IOU COMBO Token", "rCOMBO")
         GradualTokenSwap(_start, 360 days, IERC20(address(this)), COMBO)
     {
         uint256 supply = _amount * (10**uint256(decimals()));
