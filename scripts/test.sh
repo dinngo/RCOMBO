@@ -20,7 +20,7 @@ ganache_running() {
 start_ganache() {
     TEST_MNEMONIC_PHRASE="dice shove sheriff police boss indoor hospital vivid tenant method game matter"
     ETHER_PROVIDER="0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
-    COMBO_PROVIDER="0x0211f3ceDbEf3143223D3ACF0e589747933e8527"
+    COMBO_PROVIDER="0x75e89d5979E4f6Fba9F97c104c2F0AFB3F1dcB88"
 
     # node_modules/.bin/ganache-cli --gasLimit 0xfffffffffff -m "$TEST_MNEMONIC_PHRASE" > /dev/null &
     node_modules/.bin/ganache-cli --gasLimit 0xfffffffffff --debug -f $ETH_MAINNET_NODE -m "$TEST_MNEMONIC_PHRASE" -u "$ETHER_PROVIDER" -u "$COMBO_PROVIDER" > /dev/null &

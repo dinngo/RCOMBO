@@ -13,10 +13,10 @@ const { evmRevert, evmSnapshot } = require('./utils/utils');
 
 const { COMBO_TOKEN, COMBO_PROVIDER } = require('./utils/constants');
 
-const rCOMBO = artifacts.require('rCOMBO');
+const RCOMBO = artifacts.require('RCOMBO');
 const IToken = artifacts.require('IERC20');
 
-contract('rCOMBO', function([_, user, someone]) {
+contract('RCOMBO', function([_, user, someone]) {
   before(async function() {
     const totalSupply = 50000; // 0.05 M
     this.token = await IToken.at(COMBO_TOKEN);
@@ -24,7 +24,7 @@ contract('rCOMBO', function([_, user, someone]) {
     this.start = await latest();
     this.durationDay = 360;
     this.duration = duration.days(this.durationDay);
-    this.rCombo = await rCOMBO.new(totalSupply, this.start);
+    this.rCombo = await RCOMBO.new(totalSupply, this.start);
     await this.token.transfer(this.rCombo.address, this.totalSupply, {
       from: COMBO_PROVIDER,
     });
@@ -47,7 +47,7 @@ contract('rCOMBO', function([_, user, someone]) {
         this.totalSupply
       );
       expect(await this.rCombo.decimals()).to.be.bignumber.eq(new BN('18'));
-      expect(await this.rCombo.symbol()).to.be.eq('rCOMBO');
+      expect(await this.rCombo.symbol()).to.be.eq('RCOMBO');
       expect(await this.rCombo.name()).to.be.eq('Furucombo IOU COMBO Token');
       expect(await this.rCombo.balanceOf.call(_)).to.be.bignumber.eq(
         this.totalSupply
@@ -80,7 +80,7 @@ contract('rCOMBO', function([_, user, someone]) {
     });
   });
 
-  describe('Provide rCOMBO', function() {
+  describe('Provide RCOMBO', function() {
     let tokenUser;
     let tokenOwner;
     let iouTokenUser;
@@ -171,7 +171,7 @@ contract('rCOMBO', function([_, user, someone]) {
       );
     });
 
-    it('it should revert that provide exceeds balance', async function() {
+    it('Should revert: that provide exceeds balance', async function() {
       const provideAmount = ether('2000');
       await this.rCombo.approve(this.rCombo.address, provideAmount, {
         from: user,
@@ -182,7 +182,7 @@ contract('rCOMBO', function([_, user, someone]) {
       );
     });
 
-    it('it should revert that provideFor exceeds balance', async function() {
+    it('Should revert: that provideFor exceeds balance', async function() {
       await expectRevert(
         this.rCombo.provideFor(user, iouTokenOwner.add(ether('1')), {
           from: _,
@@ -360,7 +360,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('withdraw COMBO after providing rCOMBO twice', async function() {
+    it('withdraw COMBO after providing RCOMBO twice', async function() {
       // provide again
       await this.rCombo.provideFor(user, provideAmount, { from: _ });
 
@@ -383,7 +383,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('provide rCOMBO in the between withdraw twice case', async function() {
+    it('provide RCOMBO in the between withdraw twice case', async function() {
       // withdraw
       const increaseDay1 = (this.durationDay * 20) / 100;
       await increase(duration.days(increaseDay1.toString()));
@@ -409,7 +409,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('withdraw COMBO for user after providing rCOMBO twice', async function() {
+    it('withdraw COMBO for user after providing RCOMBO twice', async function() {
       // provide
       await this.rCombo.provideFor(user, provideAmount, { from: _ });
 
@@ -432,7 +432,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('Provide rCOMBO for user in the between withdraw twice case', async function() {
+    it('Provide RCOMBO for user in the between withdraw twice case', async function() {
       // withdraw
       const increaseDay1 = (this.durationDay * 20) / 100;
       await increase(duration.days(increaseDay1.toString()));
@@ -456,6 +456,20 @@ contract('rCOMBO', function([_, user, someone]) {
         .div(this.duration);
       expect(tokenUserEnd.sub(tokenUser)).to.be.bignumber.eq(expectClaim);
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
+    });
+
+    it('Should revert: withdraw RCOMBO user who will not provided before', async function() {
+      await expectRevert(
+        this.rCombo.withdraw({ from: someone }),
+        'GTS: You are have not unlocked tokens yet'
+      );
+    });
+
+    it('Should revert: withdraw RCOMBO for user who will not provided before', async function() {
+      await expectRevert(
+        this.rCombo.withdrawFor(someone, { from: _ }),
+        'GTS: You are have not unlocked tokens yet'
+      );
     });
   });
 });
