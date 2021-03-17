@@ -214,7 +214,7 @@ contract('rCOMBO', function([_, user, someone]) {
       releasedUser = await this.rCombo.released.call(user);
     });
 
-    it('user withdraw Combo 20%', async function() {
+    it('withdraw COMBO 20%', async function() {
       const increaseDay = (this.durationDay * 20) / 100;
       await increase(duration.days(increaseDay.toString()));
       const tx = await this.rCombo.withdraw({ from: user });
@@ -229,7 +229,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('user withdraw Combo 40%', async function() {
+    it('withdraw COMBO 40%', async function() {
       const increaseDay = (this.durationDay * 40) / 100;
       await increase(duration.days(increaseDay.toString()));
       const tx = await this.rCombo.withdraw({ from: user });
@@ -244,7 +244,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('user withdraw Combo 60%', async function() {
+    it('withdraw COMBO 60%', async function() {
       const increaseDay = (this.durationDay * 60) / 100;
       await increase(duration.days(increaseDay.toString()));
       const tx = await this.rCombo.withdraw({ from: user });
@@ -259,7 +259,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('user withdraw Combo 80%', async function() {
+    it('withdraw COMBO 80%', async function() {
       const increaseDay = (this.durationDay * 80) / 100;
       await increase(duration.days(increaseDay.toString()));
       const tx = await this.rCombo.withdraw({ from: user });
@@ -274,7 +274,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('user withdraw Combo 100%', async function() {
+    it('withdraw COMBO 100%', async function() {
       const increaseDay = 361;
       await increase(duration.days(increaseDay.toString()));
       const tx = await this.rCombo.withdraw({ from: user });
@@ -287,7 +287,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('withdraw Combo for user 20%', async function() {
+    it('withdraw COMBO for user 20%', async function() {
       const increaseDay = (this.durationDay * 20) / 100;
       await increase(duration.days(increaseDay.toString()));
       const tx = await this.rCombo.withdrawFor(user, { from: _ });
@@ -302,7 +302,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('withdraw Combo for user 40%', async function() {
+    it('withdraw COMBO for user 40%', async function() {
       const increaseDay = (this.durationDay * 40) / 100;
       await increase(duration.days(increaseDay.toString()));
       const tx = await this.rCombo.withdrawFor(user, { from: _ });
@@ -317,7 +317,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('withdraw Combo for user 60%', async function() {
+    it('withdraw COMBO for user 60%', async function() {
       const increaseDay = (this.durationDay * 60) / 100;
       await increase(duration.days(increaseDay.toString()));
       const tx = await this.rCombo.withdrawFor(user, { from: _ });
@@ -332,7 +332,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('withdraw Combo for user 80%', async function() {
+    it('withdraw COMBO for user 80%', async function() {
       const increaseDay = (this.durationDay * 80) / 100;
       await increase(duration.days(increaseDay.toString()));
       const tx = await this.rCombo.withdrawFor(user, { from: _ });
@@ -347,7 +347,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('withdraw Combo for user 100%', async function() {
+    it('withdraw COMBO for user 100%', async function() {
       const increaseDay = 361;
       await increase(duration.days(increaseDay.toString()));
       const tx = await this.rCombo.withdrawFor(user, { from: _ });
@@ -360,7 +360,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('withdraw after providing twice', async function() {
+    it('withdraw COMBO after providing rCOMBO twice', async function() {
       // provide again
       await this.rCombo.provideFor(user, provideAmount, { from: _ });
 
@@ -383,7 +383,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('user provide in the between twice withdraw', async function() {
+    it('provide rCOMBO in the between withdraw twice case', async function() {
       // withdraw
       const increaseDay1 = (this.durationDay * 20) / 100;
       await increase(duration.days(increaseDay1.toString()));
@@ -409,7 +409,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('Withdraw for user after provide for twice', async function() {
+    it('withdraw COMBO for user after providing rCOMBO twice', async function() {
       // provide
       await this.rCombo.provideFor(user, provideAmount, { from: _ });
 
@@ -432,7 +432,7 @@ contract('rCOMBO', function([_, user, someone]) {
       expect(releasedUserEnd.sub(releasedUser)).to.be.bignumber.eq(expectClaim);
     });
 
-    it('Withdraw for user in provide in the between twice withdraw case', async function() {
+    it('Provide rCOMBO for user in the between withdraw twice case', async function() {
       // withdraw
       const increaseDay1 = (this.durationDay * 20) / 100;
       await increase(duration.days(increaseDay1.toString()));
