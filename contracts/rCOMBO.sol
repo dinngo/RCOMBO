@@ -7,12 +7,15 @@ import "./hegic/GradualTokenSwap/contracts/GradualTokenSwap.sol";
 contract RCOMBO is ERC20, GradualTokenSwap {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
-    // prettier-ignore
-    IERC20 public constant COMBO = IERC20(0xfFffFffF2ba8F66D4e51811C5190992176930278);
 
     constructor(uint256 _amount, uint256 _start)
         ERC20("Furucombo IOU COMBO Token", "RCOMBO")
-        GradualTokenSwap(_start, 360 days, IERC20(address(this)), COMBO)
+        GradualTokenSwap(
+            _start,
+            360 days,
+            IERC20(address(this)),
+            IERC20(0xfFffFffF2ba8F66D4e51811C5190992176930278)
+        )
     {
         uint256 supply = _amount * (10**uint256(decimals()));
         _mint(msg.sender, supply);
@@ -34,7 +37,7 @@ contract RCOMBO is ERC20, GradualTokenSwap {
         uint256 amount = available(user);
         require(amount > 0, "GTS: You are have not unlocked tokens yet");
         released[user] = released[user].add(amount);
-        HEGIC.safeTransfer(user, amount);
+        COMBO.safeTransfer(user, amount);
         emit Withdrawn(user, amount);
     }
 }
