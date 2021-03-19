@@ -75,8 +75,8 @@ contract('RCOMBO', function([_, user, someone]) {
     });
 
     it('Token should be zero after executing recoverERC20', async function() {
+      const comboBalance = await this.token.balanceOf.call(_);
       const amount = ether('10');
-      await this.rCombo.transfer(this.rCombo.address, amount, { from: _ });
       await this.rCombo.recoverERC20(this.token.address, { from: _ });
       expect(await this.token.balanceOf.call(this.rCombo.address)).to.be.zero;
       expect(await this.token.balanceOf.call(_)).to.be.bignumber.eq(
@@ -481,8 +481,8 @@ contract('RCOMBO', function([_, user, someone]) {
       await this.rCombo.recoverERC20(this.token.address, { from: _ });
       expect(await this.token.balanceOf.call(this.rCombo.address)).to.be.zero;
       await expectRevert(
-        this.rCombo.withdraw({ from: someone }),
-        'GTS: You are have not unlocked tokens yet'
+        this.rCombo.withdraw({ from: user }),
+        'ERC20: transfer amount exceeds balance'
       );
     });
 
@@ -490,8 +490,8 @@ contract('RCOMBO', function([_, user, someone]) {
       await this.rCombo.recoverERC20(this.token.address, { from: _ });
       expect(await this.token.balanceOf.call(this.rCombo.address)).to.be.zero;
       await expectRevert(
-        this.rCombo.withdrawFor(someone, { from: someone }),
-        'GTS: You are have not unlocked tokens yet'
+        this.rCombo.withdrawFor(user, { from: someone }),
+        'ERC20: transfer amount exceeds balance'
       );
     });
   });
