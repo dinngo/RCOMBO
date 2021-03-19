@@ -9,7 +9,7 @@ contract RCOMBO is ERC20, GradualTokenSwap {
     using SafeMath for uint256;
 
     constructor(uint256 _amount, uint256 _start)
-        ERC20("Furucombo IOU COMBO Token", "RCOMBO")
+        ERC20("Furucombo IOU COMBO Token", "rCOMBO")
         GradualTokenSwap(
             _start,
             360 days,
