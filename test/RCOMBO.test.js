@@ -472,7 +472,7 @@ contract('RCOMBO', function([_, user, someone]) {
 
     it('Should revert: withdraw COMBO for user who did not provided before', async function() {
       await expectRevert(
-        this.rCombo.withdrawFor(someone, { from: someone }),
+        this.rCombo.withdrawFor(someone, { from: user }),
         'GTS: You are have not unlocked tokens yet'
       );
     });
