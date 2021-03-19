@@ -1,5 +1,5 @@
 {
-  "name": "ioucombo",
+  "name": "RCOMBO",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,7 +11,7 @@
     "lint:prettier": "scripts/prettier.sh"
   },
   "author": "DINNGO",
-  "license": "MIT",
+  "license": "GPL-V3",
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.5",
     "@truffle/hdwallet-provider": "^1.0.35",
